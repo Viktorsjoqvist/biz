@@ -23,7 +23,7 @@ namespace Bizi.Controllers
 
         [FunctionName("create")]
         public async Task<IActionResult> Create(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "products")] ProductModel productModel,
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "products")] [FromBody]ProductModel productModel,
             ILogger log)
         {
             if (productModel == null)
@@ -35,11 +35,11 @@ namespace Bizi.Controllers
             try
             {
                 var res = await _productService.CreateProduct(productModel);
-                if (res != null)
+                if (res != null && !res.IsError)
                 {
                     return new OkObjectResult($"Successfully created product with id {productModel.Sku}.");
                 }
-                return new ObjectResult($"Could not create product with id {productModel?.Sku}");
+                return new ObjectResult($"Could not create product with id {productModel?.Sku}. A row with this Id already exists.");
             }
             catch (Exception ex)
             {
@@ -50,8 +50,7 @@ namespace Bizi.Controllers
 
         [FunctionName("list")]
         public IActionResult List(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "products/list")] HttpRequest req,
-            ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "products/list")] HttpRequest req, ILogger log)
         {
             try
             {
