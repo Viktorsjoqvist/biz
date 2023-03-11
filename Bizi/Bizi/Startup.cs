@@ -14,14 +14,8 @@ namespace Bizi
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<ITableClientFactory>((s) =>
-            {
-                return new TableClientFactory();
-            });
-            builder.Services.AddScoped<IProductItemBuilder>((s) =>
-            {
-                return new ProductItemBuilder();
-            });
+            builder.Services.AddScoped<ITableClientFactory, TableClientFactory>();
+            builder.Services.AddScoped<IProductItemBuilder, ProductItemBuilder>();
         }
     }
 }
