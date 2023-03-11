@@ -6,20 +6,8 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Microsoft.Azure;
-using Microsoft.Azure.Storage;
 using Bizi.Models;
-using System.Reflection;
-using Microsoft.Extensions.Configuration;
-using Bizi.Constants;
-using Azure.Data.Tables;
 using Bizi.Services.Interfaces;
-using Azure.Data.Tables.Models;
-using Bizi.DAL.Product;
-using System.Collections.Generic;
-using Azure;
-using System.Collections.Concurrent;
 using System.Linq;
 
 namespace Bizi.Controllers
@@ -42,14 +30,22 @@ namespace Bizi.Controllers
             {
                 return new BadRequestObjectResult("Incoming productModel is null at products create endpoint.");
             }
-            log.LogInformation($"Incoming productModel at create endpoint: {productModel}.");
+            log.LogInformation($"Trying to create product {productModel?.Sku}.");
 
-            var res = await _productService.CreateProduct(productModel);
-            if (res != null)
+            try
             {
-                return new OkObjectResult($"Successfully created product with id {productModel.Sku}.");
+                var res = await _productService.CreateProduct(productModel);
+                if (res != null)
+                {
+                    return new OkObjectResult($"Successfully created product with id {productModel.Sku}.");
+                }
+                return new ObjectResult($"Could not create product with id {productModel?.Sku}");
             }
-            return new ObjectResult($"Could not create product with id {productModel?.Sku}");
+            catch (Exception ex)
+            {
+                log.LogError($"Error when creating product with id {productModel.Sku}.", ex);
+                throw;
+            }
         }
 
         [FunctionName("list")]
@@ -57,12 +53,20 @@ namespace Bizi.Controllers
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "products/list")] HttpRequest req,
             ILogger log)
         {
-            var allProducts = _productService.GetAllProducts();
-            if (allProducts != null && allProducts.Any()) 
+            try
             {
-                return new OkObjectResult(allProducts.Select(x => x.Id).ToList());
+                var allProducts = _productService.GetAllProducts();
+                if (allProducts != null && allProducts.Any())
+                {
+                    return new OkObjectResult(allProducts.Select(x => x.Id).ToList());
+                }
+                return new ObjectResult("No products found");
             }
-            return new ObjectResult("No products found");
+            catch (Exception ex)
+            {
+                log.LogError($"Error when listing products.", ex);
+                throw;
+            }
         }
     }
 }

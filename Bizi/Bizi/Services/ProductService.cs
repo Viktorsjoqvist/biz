@@ -1,16 +1,11 @@
 ﻿using Azure;
 using Azure.Data.Tables;
 using Bizi.Builders.Interfaces;
-using Bizi.Constants;
 using Bizi.DAL.Product;
 using Bizi.Models;
 using Bizi.Services.Interfaces;
-using Microsoft.Extensions.Configuration;
-using Microsoft.WindowsAzure.Storage.Table;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bizi.Services
