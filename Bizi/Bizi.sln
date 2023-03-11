@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bizi", "Bizi\Bizi.csproj", "{56E36D0A-D46E-4B55-AD24-A2E8DF737E17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56E36D0A-D46E-4B55-AD24-A2E8DF737E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56E36D0A-D46E-4B55-AD24-A2E8DF737E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56E36D0A-D46E-4B55-AD24-A2E8DF737E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56E36D0A-D46E-4B55-AD24-A2E8DF737E17}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6965F93-B8E5-42A2-B7EC-9013796A7023}
+	EndGlobalSection
+EndGlobal
